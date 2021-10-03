@@ -1,7 +1,7 @@
 var fft, // Allow us to analyze the song
     numBars = 1024, // The number of bars to use; power of 2 from 16 to 1024
     song; // The p5 sound object
-
+var button;
 // Load our song
 var loader = document.querySelector(".loader");
 document.getElementById("audiofile").onchange = function(event) {
@@ -17,6 +17,15 @@ document.getElementById("audiofile").onchange = function(event) {
     }
 }
 
+function toggleSong() {
+  if(song.isPlaying()) {
+    song.pause();
+  } else {
+    song.play();
+  }
+}
+
+
 var canvas;
 function setup() { // Setup p5.js
     canvas = createCanvas(windowWidth, windowHeight);
@@ -29,7 +38,8 @@ function draw() {
        && song.isLoaded() 
        && !song.isPlaying()) { // Do once
         loader.classList.remove("loading");
-        
+        button = createButton('Toggle Play');
+        button.mousePressed(toggleSong);
         song.play();
         song.setVolume(0.5);
 
